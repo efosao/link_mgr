@@ -11,7 +11,28 @@ const allPostsQuery = gql`
   }
 `
 
-const formatLinkBlocks = links => links.map(l => <li key={l.id}>{l.url}</li>)
+const formatLinkBlocks = links => (
+  <ul>
+    {links.map(l => (
+      <li key={l.id}>
+        <a href={l.url} target='_blank'>{l.url}</a>
+      </li>
+    ))}
+    <style jsx>{`
+      ul {
+        list-style-type: none;
+        margin: 10px 0 0 0;
+        padding: 0;
+        width: 400px;
+      }
+      ul > li {
+        color: #333;
+        display: block;
+        padding: 5px;
+      }
+    `}</style>
+  </ul>
+)
 
 const LinksList = ({ id }) => (
   <Query query={allPostsQuery} variables={{ id }}>
@@ -19,9 +40,7 @@ const LinksList = ({ id }) => (
       if (error) return <div>{JSON.stringify({ error })}</div>
       if (loading) return <div>Loading</div>
       const { getLinks } = data
-      return (
-        <ul>{formatLinkBlocks(getLinks)}</ul>
-      )
+      return formatLinkBlocks(getLinks)
     }}
   </Query>
 )
