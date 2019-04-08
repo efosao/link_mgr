@@ -4,7 +4,11 @@
   "description": "Link mgr app for Supergroup test",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon ./server/app.js",
+    "build": "next build",
+    "fix": "standard --fix",
+    "start": "node ./server/app.js",
+    "test": "standard"
   },
   "author": "Efosa Oyegun",
   "license": "ISC",
@@ -13,10 +17,17 @@
     "apollo-link-http": "^1.5.14",
     "apollo-link-ws": "^1.0.17",
     "apollo-utilities": "^1.2.1",
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.4",
     "express": "^4.16.4",
+    "graphql": "^14.2.1",
     "next": "^8.0.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "standard": "^12.0.1"
+    "standard": "^12.0.1",
+    "subscriptions-transport-ws": "^0.9.16"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
   }
 }
