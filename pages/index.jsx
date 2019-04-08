@@ -6,7 +6,7 @@ import {
   Header,
   Icon
 } from 'semantic-ui-react'
-import LinksList from '../components/links_list'
+import LinksForm from '../components/links_form'
 import { baseUrl } from '../lib_shared/constants'
 
 const Page = ({ id }) => {
@@ -21,8 +21,7 @@ const Page = ({ id }) => {
               <Header.Subheader>By Efosa Oyegun</Header.Subheader>
             </Header.Content>
           </Header>
-          <p>ID: {id}</p>
-          <LinksList />
+          <LinksForm id={id} />
         </Container>
       </GridColumn>
       <style jsx global>{`
