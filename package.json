@@ -10,6 +10,9 @@
     "start": "node ./server/app.js",
     "test": "standard"
   },
+  "standard": {
+    "parser": "babel-eslint"
+  },
   "author": "Efosa Oyegun",
   "license": "ISC",
   "dependencies": {
@@ -19,6 +22,7 @@
     "apollo-link-ws": "^1.0.17",
     "apollo-server-express": "^2.4.8",
     "apollo-utilities": "^1.2.1",
+    "babel-eslint": "^10.0.1",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.4",
     "express": "^4.16.4",
