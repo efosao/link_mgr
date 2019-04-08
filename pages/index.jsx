@@ -5,6 +5,7 @@ import {
   Icon,
   GridColumn
 } from 'semantic-ui-react'
+import LinksList from '../components/links_list'
 
 const Page = () => {
   return (
@@ -18,7 +19,7 @@ const Page = () => {
               <Header.Subheader>By Efosa Oyegun</Header.Subheader>
             </Header.Content>
           </Header>
-          <p>Etc ....</p>
+          <LinksList />
         </Container>
       </GridColumn>
       <style jsx global>{`
