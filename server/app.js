@@ -2,6 +2,7 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const express = require('express')
 const next = require('next')
+const apolloServer = require('./apollo_server')
 const { isDev } = require('../lib_shared/constants')
 
 const port = parseInt(process.env.PORT, 10) || 3000
@@ -11,6 +12,7 @@ server.prepare()
   .then(() => {
     const handle = server.getRequestHandler(server)
     const app = express()
+    apolloServer.applyMiddleware({ app })
 
     app.get('/health', (req, res) => res.send('ok'))
     app.use(bodyParser.json())
