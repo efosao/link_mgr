@@ -3,15 +3,18 @@ const { ApolloServer, gql } = require('apollo-server-express')
 // GraphQL Schema
 const typeDefs = gql`
   type Query {
-    "A simple type for getting started!"
-    hello: String
+    getLinks (id: String!): [String]
   }
 `
 
 // GraphQL Schema Resolvers
 const resolvers = {
   Query: {
-    hello: () => 'world'
+    getLinks: ($, { id }) => [
+      'hello',
+      'world',
+      id
+    ]
   }
 }
 
