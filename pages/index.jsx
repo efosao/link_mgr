@@ -1,13 +1,15 @@
+import nanoid from 'nanoid'
 import {
   Container,
   Grid,
+  GridColumn,
   Header,
-  Icon,
-  GridColumn
+  Icon
 } from 'semantic-ui-react'
 import LinksList from '../components/links_list'
+import { baseUrl } from '../lib_shared/constants'
 
-const Page = () => {
+const Page = ({ id }) => {
   return (
     <Grid>
       <GridColumn>
@@ -19,6 +21,7 @@ const Page = () => {
               <Header.Subheader>By Efosa Oyegun</Header.Subheader>
             </Header.Content>
           </Header>
+          <p>ID: {id}</p>
           <LinksList />
         </Container>
       </GridColumn>
@@ -29,6 +32,16 @@ const Page = () => {
       `}</style>
     </Grid>
   )
+}
+
+Page.getInitialProps = ({ query = {}, res }) => {
+  const { id } = query
+  if (id) return { id }
+
+  // redirect user to page with unique id for semi-private lists
+  const redirectUrl = `${baseUrl}/${nanoid()}`
+  if (res) return res.redirect(redirectUrl)
+  window.location = redirectUrl
 }
 
 export default Page

@@ -4,13 +4,14 @@ const express = require('express')
 const next = require('next')
 const apolloServer = require('./apollo_server')
 const { isDev } = require('../lib_shared/constants')
+const routes = require('../routes')
 
 const port = parseInt(process.env.PORT, 10) || 3000
 const server = next({ dev: isDev })
 
 server.prepare()
   .then(() => {
-    const handle = server.getRequestHandler(server)
+    const handle = routes.getRequestHandler(server)
     const app = express()
     apolloServer.applyMiddleware({ app })
 
