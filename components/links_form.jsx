@@ -16,7 +16,9 @@ const ADD_LINK = gql`
 
 const LinksForm = ({ id }) => {
   const [ url, setUrl ] = useState('')
+  const [ filter, setFilter ] = useState('')
   const urlInputRef = useRef()
+  const filterInputRef = useRef()
 
   const handleUrlChange = e => {
     const value = e.currentTarget.value
@@ -24,10 +26,20 @@ const LinksForm = ({ id }) => {
     setUrl(formattedValue.trim())
   }
 
+  const handleFilterChange = e => {
+    const value = filterInputRef.current.inputRef.current.value
+    setFilter(value)
+  }
+
   const getUrlChangeHandler = addLink => {
     return e => {
       if (e.which === 13) addLink()
     }
+  }
+
+  const clearFilterInput = () => {
+    setFilter('')
+    filterInputRef.current.inputRef.current.value = ''
   }
 
   const clearUrlInput = () => {
@@ -79,22 +91,39 @@ const LinksForm = ({ id }) => {
                 content: 'Add URL',
                 onClick: handleAddLink
               }}
-              onChange={handleUrlChange}
               input={(
                 <input
                   onKeyUp={getUrlChangeHandler(handleAddLink)}
                 />
               )}
+              onChange={handleUrlChange}
               pattern='https://.*'
               placeholder='https:// ...'
-              type='url'
               ref={urlInputRef}
+              type='url'
             />
-            <LinksList id={id} />
+
+            <span className='input_filter'>
+              <Input
+                action={{
+                  content: 'Clear filter',
+                  onClick: clearFilterInput
+                }}
+
+                onChange={handleFilterChange}
+                placeholder='filter'
+                ref={filterInputRef}
+              />
+            </span>
+
+            <LinksList filter={filter} id={id} />
             <style jsx>{`
               div {
                 min-height: 70vh;
-              }  
+              }
+              .input_filter {
+                margin: 0 0 0 20px;
+              }
               
             `}</style>
           </div>
