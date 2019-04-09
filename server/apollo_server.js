@@ -9,7 +9,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    getLinks (id: String!): [Link]
+    allLinks (id: String!): [Link]
   }
 
   type Mutation {
@@ -20,7 +20,7 @@ const typeDefs = gql`
 // GraphQL Schema Resolvers
 const resolvers = {
   Query: {
-    getLinks: ($, { id }) => db.getLinksCollById(id)
+    allLinks: ($, { id }) => db.getLinksCollById(id)
   },
   Mutation: {
     addLink: ($, { id, url }) => db.addLink(id, url)

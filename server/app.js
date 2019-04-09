@@ -3,10 +3,9 @@ const cookieParser = require('cookie-parser')
 const express = require('express')
 const next = require('next')
 const apolloServer = require('./apollo_server')
-const { isDev } = require('../lib_shared/constants')
+const { isDev, port } = require('../lib_shared/constants')
 const routes = require('../routes')
 
-const port = parseInt(process.env.PORT, 10) || 3000
 const server = next({ dev: isDev })
 
 server.prepare()
