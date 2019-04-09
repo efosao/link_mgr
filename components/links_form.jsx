@@ -1,8 +1,9 @@
 import gql from 'graphql-tag'
+import startsWith from 'lodash/startsWith'
 import { useRef, useState } from 'react'
 import { Mutation } from 'react-apollo'
 import { Input } from 'semantic-ui-react'
-import LinksList from './links_list'
+import LinksList, { allLinksQuery } from './links_list'
 
 const ADD_LINK = gql`
   mutation getLink ($id: String!, $url: String!) {
@@ -19,13 +20,16 @@ const LinksForm = ({ id }) => {
 
   const handleUrlChange = e => {
     const value = e.currentTarget.value
-    setUrl(value)
+    const formattedValue = startsWith(value, 'http') ? value : `http://${value}`
+    setUrl(formattedValue)
   }
 
   const clearUrlInput = () => {
     setUrl('')
     urlInputRef.current.inputRef.current.value = ''
   }
+
+  const allLinksQueryVars = { id }
 
   return (
     <Mutation
@@ -35,6 +39,25 @@ const LinksForm = ({ id }) => {
         clearUrlInput()
       }}
       variables={{ id, url }}
+      update={(proxy, result) => {
+        const { addLink } = result.data
+
+        const data = proxy.readQuery({
+          query: allLinksQuery,
+          variables: allLinksQueryVars
+        })
+
+        const newQuery = {
+          query: allLinksQuery,
+          data: {
+            ...data,
+            allLinks: [addLink, ...data.allLinks]
+          },
+          variables: allLinksQueryVars
+        }
+
+        proxy.writeQuery(newQuery)
+      }}
     >
       {(addLink, { data }) => {
         return (
