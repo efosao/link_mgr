@@ -7,6 +7,7 @@ import {
   Icon
 } from 'semantic-ui-react'
 import LinksForm from '../components/links_form'
+import Share from '../components/share'
 import { baseUrl } from '../lib_shared/constants'
 
 const Page = ({ id }) => {
@@ -22,6 +23,7 @@ const Page = ({ id }) => {
             </Header.Content>
           </Header>
           <LinksForm id={id} />
+          <Share id={id} />
         </Container>
       </GridColumn>
       <style jsx global>{`

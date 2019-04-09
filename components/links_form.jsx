@@ -21,7 +21,13 @@ const LinksForm = ({ id }) => {
   const handleUrlChange = e => {
     const value = e.currentTarget.value
     const formattedValue = startsWith(value, 'http') ? value : `http://${value}`
-    setUrl(formattedValue)
+    setUrl(formattedValue.trim())
+  }
+
+  const getUrlChangeHandler = addLink => {
+    return e => {
+      if (e.which === 13) addLink()
+    }
   }
 
   const clearUrlInput = () => {
@@ -60,20 +66,37 @@ const LinksForm = ({ id }) => {
       }}
     >
       {(addLink, { data }) => {
+        const handleAddLink = () => {
+          // minor valdation
+          const value = urlInputRef.current.inputRef.current.value.trim()
+          if (value) addLink()
+        }
+
         return (
           <div>
             <Input
               action={{
                 content: 'Add URL',
-                onClick: addLink
+                onClick: handleAddLink
               }}
               onChange={handleUrlChange}
+              input={(
+                <input
+                  onKeyUp={getUrlChangeHandler(handleAddLink)}
+                />
+              )}
               pattern='https://.*'
               placeholder='https:// ...'
               type='url'
               ref={urlInputRef}
             />
             <LinksList id={id} />
+            <style jsx>{`
+              div {
+                min-height: 70vh;
+              }  
+              
+            `}</style>
           </div>
         )
       }}
